@@ -34,6 +34,8 @@
 
   - master ← hotfix
 
+<br><br>
+
 ## 2. Commit 관련
 - Commit Message 구조
 ```bash
@@ -76,10 +78,14 @@ See also : #issue, ...(참고 이슈, 생략 가능)
 
   - 본문은 어떻게 보다 무엇을, 왜에 맞춰 작성기
 
+<br><br>
+
 ## 3. Coding Style 관련
 - JAVA : [Google Coding Style](https://google.github.io/styleguide/javaguide.html)
 
 - JavaScript : [Google Coding Style](https://google.github.io/styleguide/jsguide.html)
+
+<br><br>
 
 ## 4. Pull Request 관련
 - PR 시에 전반적인 설명(이유)에 대해서 작성
@@ -92,6 +98,8 @@ See also : #issue, ...(참고 이슈, 생략 가능)
 
 - merge는 PR 요청자가 한다.
 
+<br><br>
+
 ## 5. Review 관련
 - 코드 리뷰는 존중하는 마음으로 합니다.
 
@@ -100,6 +108,8 @@ See also : #issue, ...(참고 이슈, 생략 가능)
 - 네이밍에 대한 조언은 함수가 어떤 역할을 수행하는지 뚜렷하지 않을 때 합니다.
 
 - 코드 리뷰는 실력이 좋은 사람이 하는 것이 아닙니다.
+
+<br><br>
 
 ## 6. Main Branch Protection Rule 
 
