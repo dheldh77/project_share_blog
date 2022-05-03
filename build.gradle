@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.6.7'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'com.github.node-gradle.node' version '3.2.1'
 	id 'java'
 }
 
@@ -10,6 +11,23 @@ sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+}
+
+node {
+	// node.js version
+	version = '17.3.1'
+	download = true // true가 아닐 경우 global로 설치된 node.js가 있어야 한다.
+	nodeProjectDir = file("./src/main/view")
+}
+
+task setUp(type: NpmTask) {
+	description = "Install Node.js packages"
+	args = ['install']
+}
+
+task buildView(type: NpmTask, dependsOn: setUp){
+	description = "Build Vue.js"
+	args = ['run', 'build']
 }
 
 dependencies {
@@ -24,3 +42,5 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+processResources.dependsOn 'buildView'
