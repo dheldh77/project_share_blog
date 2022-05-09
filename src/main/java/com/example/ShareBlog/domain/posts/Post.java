@@ -14,6 +14,7 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 import org.springframework.data.domain.Persistable;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -23,7 +24,7 @@ import java.util.UUID;
 public class Post implements Persistable<UUID> {
 
     @Id
-    @PrimaryKeyColumn(name = "post_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
+    @PrimaryKeyColumn(name = "post_id", type = PrimaryKeyType.PARTITIONED)
     private UUID id;
 
     private String title;
@@ -69,7 +70,7 @@ public class Post implements Persistable<UUID> {
     }
 
     // TODO: move common properties like timestamp to a base class (ex. BaseTimeEntity)
-    @PrimaryKeyColumn(ordinal = 1, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
+//    @PrimaryKeyColumn(ordinal = 1, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
     @CreatedDate
     private LocalDateTime dateCreated;
 

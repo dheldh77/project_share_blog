@@ -3,6 +3,7 @@ package com.example.ShareBlog.web;
 import com.datastax.driver.core.Session;
 import com.example.ShareBlog.domain.posts.Post;
 import com.example.ShareBlog.domain.posts.PostRepository;
+import com.example.ShareBlog.web.dto.PostResponseDto;
 import com.example.ShareBlog.web.dto.PostSaveRequestDto;
 import com.example.ShareBlog.web.dto.PostUpdateRequestDto;
 import org.junit.After;
@@ -153,13 +154,12 @@ public class PostApiControllerTest {
 
         String url = "http://localhost:" + port + "/api/v1/post/" + getId;
 
-        // TODO: fix get post test (cannot deserialize PostResponseDto)
-//        ResponseEntity<PostResponseDto> responseEntity = testRestTemplate.getForEntity(url, PostResponseDto.class);
-//
-//        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-////
-//        assertThat(responseEntity.getBody().getTitle()).isEqualTo(title);
-//        assertThat(responseEntity.getBody().getContent()).isEqualTo(content);
+        ResponseEntity<PostResponseDto> responseEntity = testRestTemplate.getForEntity(url, PostResponseDto.class);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        assertThat(responseEntity.getBody().getTitle()).isEqualTo(title);
+        assertThat(responseEntity.getBody().getContent()).isEqualTo(content);
     }
 
     @Test

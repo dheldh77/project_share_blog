@@ -1,7 +1,10 @@
 spring:
   data:
     cassandra:
-      keyspace-name: ${CASSANDRA_KEYSPACE_NAME}
-      port: ${CASSANDRA_PORT}
-      contact-points: ${CASSANDRA_CONTACT_POINTS}
-      local-datacenter: datacenter1
+      keyspace-name: shareblog
+      port: 9042
+      contact-points: 127.0.0.1
+      local-datacenter: datacenter1 # select data_center from system.local; -> from cqlsh
+      schema-action: create_if_not_exists
+      username: cassandra
+      password: cassandra

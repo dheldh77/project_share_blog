@@ -2,9 +2,13 @@ package com.example.ShareBlog.web.dto;
 
 import com.example.ShareBlog.domain.posts.Post;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 
 @Getter
+@NoArgsConstructor
 public class PostResponseDto {
     private String title;
     private String content;

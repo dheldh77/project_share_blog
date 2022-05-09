@@ -1,5 +1,6 @@
 package com.example.ShareBlog.domain.user;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -19,17 +20,24 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(value = "user_by_id")
 public class User implements Persistable<UUID> {
-    @Id
+
     @PrimaryKeyColumn(name = "post_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     private UUID id;
 
-    @PrimaryKeyColumn(ordinal = 1, ordering = Ordering.ASCENDING)
     private String lastName;
 
-    @PrimaryKeyColumn(ordinal = 2, ordering = Ordering.ASCENDING)
     private String firstName;
 
     private String username;
+
+    @Builder
+    public User(String lastName, String firstName, String username) {
+        this.id = UUID.randomUUID();
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.username = username;
+        isNew = true;
+    }
 
     @CreatedDate
     private LocalDateTime dateCreated;
