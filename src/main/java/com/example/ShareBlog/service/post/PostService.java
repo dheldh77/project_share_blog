@@ -2,13 +2,18 @@ package com.example.ShareBlog.service.post;
 
 import com.example.ShareBlog.domain.posts.Post;
 import com.example.ShareBlog.domain.posts.PostRepository;
+import com.example.ShareBlog.domain.postsByUser.PostsByUser;
+import com.example.ShareBlog.domain.postsByUser.PostsByUserPrimaryKey;
+import com.example.ShareBlog.domain.postsByUser.PostsByUserRepository;
 import com.example.ShareBlog.web.dto.PostResponseDto;
 import com.example.ShareBlog.web.dto.PostSaveRequestDto;
 import com.example.ShareBlog.web.dto.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -16,6 +21,7 @@ import java.util.UUID;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final PostsByUserRepository postsByUserRepository;
 
     @Transactional
     public UUID save(PostSaveRequestDto requestDto){
@@ -52,4 +58,9 @@ public class PostService {
 
         postRepository.delete(post);
     }
+
+//    @Transactional
+//    public void findByUser(PostsByUserPrimaryKey key){
+//        Optional<PostsByUser> postsSlice = postsByUserRepository.findAllById(key);
+//    }
 }

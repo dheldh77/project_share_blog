@@ -91,7 +91,7 @@ public class PostApiControllerTest {
         assertThat(post.getContent()).isEqualTo(content);
         assertThat(post.getAuthor()).isEqualTo(author);
         assertThat(post.getCategory()).isEqualTo(category);
-        assertThat(post.getThumbnail_id()).isEqualTo(thumbnailId);
+        assertThat(post.getThumbnailId()).isEqualTo(thumbnailId);
     }
 
     @Test
@@ -106,7 +106,7 @@ public class PostApiControllerTest {
                 .content(content)
                 .author(author)
                 .category(category)
-                .thumbnail_id(thumbnailId)
+                .thumbnailId(thumbnailId)
                 .build());
 
         UUID updateId = post.getId();
@@ -147,7 +147,7 @@ public class PostApiControllerTest {
                 .content(content)
                 .author(author)
                 .category(category)
-                .thumbnail_id(thumbnailId)
+                .thumbnailId(thumbnailId)
                 .build());
 
         UUID getId = post.getId();
@@ -174,7 +174,7 @@ public class PostApiControllerTest {
                 .content(content)
                 .author(author)
                 .category(category)
-                .thumbnail_id(thumbnailId)
+                .thumbnailId(thumbnailId)
                 .build());
 
         UUID getId = post.getId();

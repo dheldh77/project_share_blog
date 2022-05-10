@@ -12,7 +12,7 @@ public class PostSaveRequestDto {
     private String content;
     private String author;
     private String category;
-    private String thumbnail_id;
+    private String thumbnailId;
 
     @Builder
     public PostSaveRequestDto(String title, String content, String author, String category, String thumbnail_id) {
@@ -20,7 +20,7 @@ public class PostSaveRequestDto {
         this.content = content;
         this.author = author;
         this.category = category;
-        this.thumbnail_id = thumbnail_id;
+        this.thumbnailId = thumbnail_id;
     }
 
     public Post toEntity(){
@@ -29,7 +29,7 @@ public class PostSaveRequestDto {
                 .content(content)
                 .author(author)
                 .category(category)
-                .thumbnail_id(thumbnail_id)
+                .thumbnailId(thumbnailId)
                 .build();
     }
 }

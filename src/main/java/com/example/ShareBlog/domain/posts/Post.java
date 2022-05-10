@@ -1,6 +1,5 @@
 package com.example.ShareBlog.domain.posts;
 
-import com.example.ShareBlog.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,13 +7,11 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.cassandra.core.cql.Ordering;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 import org.springframework.data.domain.Persistable;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -35,25 +32,25 @@ public class Post implements Persistable<UUID> {
 
     private String category;
 
-    private String thumbnail_id;
+    private String thumbnailId;
 
     @Builder
-    public Post(String title, String content, String author, String category, String thumbnail_id) {
+    public Post(String title, String content, String author, String category, String thumbnailId) {
         this.id = UUID.randomUUID();
         this.title = title;
         this.content = content;
         this.author = author;
         this.category = category;
-        this.thumbnail_id = thumbnail_id;
+        this.thumbnailId = thumbnailId;
         isNew = true;
     }
 
-    public void update(String title, String content, String author, String category, String thumbnail_id) {
+    public void update(String title, String content, String author, String category, String thumbnailId) {
         this.title = title;
         this.content = content;
         this.author = author;
         this.category = category;
-        this.thumbnail_id = thumbnail_id;
+        this.thumbnailId = thumbnailId;
     }
 
     // TODO: Individual update functions required?

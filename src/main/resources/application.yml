@@ -5,6 +5,6 @@ spring:
       port: 9042
       contact-points: 127.0.0.1
       local-datacenter: datacenter1 # select data_center from system.local; -> from cqlsh
-      schema-action: create_if_not_exists
       username: cassandra
       password: cassandra
+#      schema-action: CREATE_IF_NOT_EXISTS

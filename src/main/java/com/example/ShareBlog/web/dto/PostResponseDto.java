@@ -4,8 +4,6 @@ import com.example.ShareBlog.domain.posts.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 
 @Getter
 @NoArgsConstructor
@@ -21,6 +19,6 @@ public class PostResponseDto {
         this.content = entity.getContent();
         this.author = entity.getAuthor();
         this.category = entity.getCategory();
-        this.thumbnail_id = entity.getThumbnail_id();
+        this.thumbnail_id = entity.getThumbnailId();
     }
 }

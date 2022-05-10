@@ -13,7 +13,7 @@ import java.util.Optional;
 @Configuration
 @EnableCassandraRepositories
 @EnableCassandraAuditing
-public class CassandraConfig extends CassandraAutoConfiguration {
+public class CassandraConfig {
 
     @Bean
     AuditorAware<String> auditorAware(){

@@ -88,7 +88,7 @@ public class PostRepositoryTest {
                 .content(content)
                 .author(author)
                 .category(category)
-                .thumbnail_id(thumbnailid)
+                .thumbnailId(thumbnailid)
                 .build());
 
         String title2 = "title2";
@@ -119,7 +119,7 @@ public class PostRepositoryTest {
         assertThat(updatedPost.get().getContent()).isEqualTo(content2);
         assertThat(updatedPost.get().getAuthor()).isEqualTo(author2);
         assertThat(updatedPost.get().getCategory()).isEqualTo(category2);
-        assertThat(updatedPost.get().getThumbnail_id()).isEqualTo(thumbnailid2);
+        assertThat(updatedPost.get().getThumbnailId()).isEqualTo(thumbnailid2);
         assertThat(modified1).isNotEqualTo(post.getDateModified());
     }
 

@@ -6,12 +6,10 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Persistable;
 
-import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
-@MappedSuperclass   // mapping info applied to entities that inherit from it (e.g. getCreatedDate)
 public class BaseTimeEntity implements Persistable<UUID> {
     // TODO: move common properties like timestamp to a base class (ex. BaseTimeEntity)
 

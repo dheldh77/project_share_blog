@@ -5,7 +5,6 @@ import com.example.ShareBlog.web.dto.PostResponseDto;
 import com.example.ShareBlog.web.dto.PostSaveRequestDto;
 import com.example.ShareBlog.web.dto.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.procedure.internal.PostgresCallableStatementSupport;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;

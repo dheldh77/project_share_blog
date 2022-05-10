@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 
-@EnableAutoConfiguration
+//@EnableAutoConfiguration
 @SpringBootApplication
 public class ShareBlogApplication {
 
