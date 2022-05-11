@@ -11,7 +11,7 @@ public class PostUpdateRequestDto {
     private String content;
     private String author;
     private String category;
-    private String thumbnail_id;
+    private String thumbnailId;
 
     @Builder
     public PostUpdateRequestDto(String title, String content, String author, String category, String thumbnail_id) {
@@ -19,6 +19,6 @@ public class PostUpdateRequestDto {
         this.content = content;
         this.author = author;
         this.category = category;
-        this.thumbnail_id = thumbnail_id;
+        this.thumbnailId = thumbnail_id;
     }
 }

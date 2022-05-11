@@ -3,8 +3,8 @@ spring:
     cassandra:
       keyspace-name: shareblog
       port: 9042
-      contact-points: 127.0.0.1
+      contact-points: 175.119.71.93
       local-datacenter: datacenter1 # select data_center from system.local; -> from cqlsh
       username: cassandra
       password: cassandra
-#      schema-action: CREATE_IF_NOT_EXISTS
+      schema-action: CREATE_IF_NOT_EXISTS
