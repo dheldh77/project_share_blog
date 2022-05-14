@@ -1,24 +1,10 @@
 spring:
-  jpa:
-    show_sql: true
-
-    properties:
-      hibernate:
-        - dialect: org.hibernate.dialect.MySQL57Dialect
-        - dialect:
-            storage_engine: innodb
-  h2:
-    console:
-      enabled: true
-
-  # set url or it will be randomly generated
-  datasource:
-    url: jdbc:h2:mem:testdb
-
-  hikari:
-    jdbc-url: jdbc:h2:mem:testdb;MODE=MYSQL
-    username: sa
-
-  # stores session to jdbc instead of default tomcat - automatically creates table in DB
-  session:
-    store-type: jdbc
+  data:
+    cassandra:
+      keyspace-name: shareblog
+      port: 9042
+      contact-points: 175.119.71.93
+      local-datacenter: datacenter1 # select data_center from system.local; -> from cqlsh
+      username: cassandra
+      password: cassandra
+      schema-action: CREATE_IF_NOT_EXISTS
