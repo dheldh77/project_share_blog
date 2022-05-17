@@ -1,5 +1,6 @@
-package com.example.ShareBlog.domain.posts;
+package com.example.ShareBlog.domain.post;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
+import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 import org.springframework.data.domain.Persistable;
@@ -28,27 +30,31 @@ public class Post implements Persistable<UUID> {
 
     private String content;
 
-    private String author;
+    @Column("user_id")
+    private UUID userId;
+
+    private String username;
 
     private String category;
 
+    @Column("thumbnail_id")
     private String thumbnailId;
 
     @Builder
-    public Post(String title, String content, String author, String category, String thumbnailId) {
+    public Post(String title, String content, UUID userId, String username, String category, String thumbnailId) {
         this.id = UUID.randomUUID();
         this.title = title;
         this.content = content;
-        this.author = author;
+        this.userId = userId;
+        this.username = username;
         this.category = category;
         this.thumbnailId = thumbnailId;
         isNew = true;
     }
 
-    public void update(String title, String content, String author, String category, String thumbnailId) {
+    public void update(String title, String content, String category, String thumbnailId) {
         this.title = title;
         this.content = content;
-        this.author = author;
         this.category = category;
         this.thumbnailId = thumbnailId;
     }
@@ -67,13 +73,13 @@ public class Post implements Persistable<UUID> {
     }
 
     // TODO: move common properties like timestamp to a base class (ex. BaseTimeEntity)
-//    @PrimaryKeyColumn(ordinal = 1, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
     @CreatedDate
     private LocalDateTime dateCreated;
 
     @LastModifiedDate
     private LocalDateTime dateModified;
 
+    @Getter(AccessLevel.NONE)
     @Transient
     private boolean isNew;
 

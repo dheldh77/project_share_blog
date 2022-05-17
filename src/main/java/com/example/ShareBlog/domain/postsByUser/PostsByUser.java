@@ -1,5 +1,6 @@
 package com.example.ShareBlog.domain.postsByUser;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.cassandra.core.mapping.Column;
@@ -14,7 +15,7 @@ import java.util.UUID;
 public class PostsByUser {
 
     @PrimaryKey
-    private PostsByUserPrimaryKey key;
+    private PostsByUserPK key;
 
     private String username;
 
@@ -23,7 +24,20 @@ public class PostsByUser {
 
     private String title;
 
+    @Column("thumbnail_id")
     private String thumbnailId;
 
+    @Builder
+    public PostsByUser(PostsByUserPK key, String username, UUID postId, String title, String thumbnailId) {
+        this.key = key;
+        this.username = username;
+        this.postId = postId;
+        this.title = title;
+        this.thumbnailId = thumbnailId;
+    }
 
+    public void update(String title, String thumbnailId){
+        this.title = title;
+        this.thumbnailId = thumbnailId;
+    }
 }

@@ -1,13 +1,18 @@
 package com.example.ShareBlog.web;
 
 import com.datastax.driver.core.Session;
-import com.example.ShareBlog.domain.posts.Post;
-import com.example.ShareBlog.domain.posts.PostRepository;
-import com.example.ShareBlog.web.dto.PostResponseDto;
-import com.example.ShareBlog.web.dto.PostSaveRequestDto;
-import com.example.ShareBlog.web.dto.PostUpdateRequestDto;
+import com.example.ShareBlog.domain.post.Post;
+import com.example.ShareBlog.domain.post.PostRepository;
+import com.example.ShareBlog.domain.postsByUser.PostsByUser;
+import com.example.ShareBlog.domain.postsByUser.PostsByUserPK;
+import com.example.ShareBlog.domain.postsByUser.PostsByUserRepository;
+import com.example.ShareBlog.web.dto.post.PostResponseDto;
+import com.example.ShareBlog.web.dto.post.PostSaveRequestDto;
+import com.example.ShareBlog.web.dto.post.PostUpdateRequestDto;
+import com.example.ShareBlog.web.dto.postsByUser.PostsByUserResponseDto;
 import org.junit.After;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +26,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,6 +45,9 @@ public class PostApiControllerTest {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private PostsByUserRepository postsByUserRepository;
 
     private static final String KEYSPACE_NAME = "TestKeyspace";
 
@@ -61,22 +70,25 @@ public class PostApiControllerTest {
         }
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @BeforeEach
+    public void reset(){
         postRepository.deleteAll();
+        postsByUserRepository.deleteAll();
     }
 
     @Test
     public void publishPost() throws Exception {
         String title = "title";
         String content = "content";
-        String author = "author";
+        UUID userId = UUID.randomUUID();
+        String username = "author";
         String category = "category";
         String thumbnailId = "thumbnail";
         PostSaveRequestDto requestDto = PostSaveRequestDto.builder()
                 .title(title)
                 .content(content)
-                .author(author)
+                .userId(userId)
+                .username(username)
                 .category(category)
                 .thumbnail_id(thumbnailId)
                 .build();
@@ -89,24 +101,48 @@ public class PostApiControllerTest {
         Post post = posts.get(0);
         assertThat(post.getTitle()).isEqualTo(title);
         assertThat(post.getContent()).isEqualTo(content);
-        assertThat(post.getAuthor()).isEqualTo(author);
+        assertThat(post.getUsername()).isEqualTo(username);
         assertThat(post.getCategory()).isEqualTo(category);
         assertThat(post.getThumbnailId()).isEqualTo(thumbnailId);
+
+        // Check PostsByUser
+        List<PostsByUser> postsByUserList = postsByUserRepository.findAll();
+        PostsByUser postsByUser = postsByUserList.get(0);
+        assertThat(postsByUser.getPostId()).isEqualTo(post.getId());
+        assertThat(postsByUser.getUsername()).isEqualTo(username);
+        assertThat(postsByUser.getThumbnailId()).isEqualTo(thumbnailId);
+        assertThat(postsByUser.getTitle()).isEqualTo(title);
     }
 
     @Test
     public void editPost() {
         String title = "title";
         String content = "content";
-        String author = "author";
+        UUID userId = UUID.randomUUID();
+        String username = "username";
         String category = "category";
         String thumbnailId = "thumbnail";
+
         Post post = postRepository.save(Post.builder()
                 .title(title)
                 .content(content)
-                .author(author)
+                .userId(userId)
+                .username(username)
                 .category(category)
                 .thumbnailId(thumbnailId)
+                .build());
+
+        // Must save to PostsByUser too
+        PostsByUserPK key = PostsByUserPK.builder()
+                .userId(post.getUserId())
+                .dateCreated(post.getDateCreated())
+                .build();
+        PostsByUser postsByUser = postsByUserRepository.save(PostsByUser.builder()
+                .title(title)
+                .key(key)
+                .thumbnailId(thumbnailId)
+                .username(username)
+                .postId(post.getId())
                 .build());
 
         UUID updateId = post.getId();
@@ -117,9 +153,8 @@ public class PostApiControllerTest {
         PostUpdateRequestDto requestDto = PostUpdateRequestDto.builder()
                 .title(title2)
                 .content(content2)
-                .author(author)
                 .category(category)
-                .thumbnail_id(thumbnailId)
+                .thumbnailId(thumbnailId)
                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/post/" + updateId;
@@ -133,19 +168,30 @@ public class PostApiControllerTest {
         Post updatedPost = posts.get(0);
         assertThat(updatedPost.getTitle()).isEqualTo(title2);
         assertThat(updatedPost.getContent()).isEqualTo(content2);
+
+        // Check PostsByUser
+        key = PostsByUserPK.builder()
+                .userId(updatedPost.getUserId()).
+                dateCreated(updatedPost.getDateCreated())
+                .build();
+        Optional<PostsByUser> postsBU = postsByUserRepository.findById(key);
+        PostsByUser updatedPostsByUser = postsBU.get();
+        assertThat(updatedPostsByUser.getTitle()).isEqualTo(title2);
     }
 
     @Test
-    public void getPost(){
+    public void getPost() {
         String title = "title";
         String content = "content";
-        String author = "author";
+        UUID userId = UUID.randomUUID();
+        String username = "username";
         String category = "category";
         String thumbnailId = "thumbnail";
         Post post = postRepository.save(Post.builder()
                 .title(title)
                 .content(content)
-                .author(author)
+                .userId(userId)
+                .username(username)
                 .category(category)
                 .thumbnailId(thumbnailId)
                 .build());
@@ -163,18 +209,34 @@ public class PostApiControllerTest {
     }
 
     @Test
-    public void deletePost(){
+    public void deletePost() {
         String title = "title";
         String content = "content";
-        String author = "author";
+        UUID userId = UUID.randomUUID();
+        String username = "username";
         String category = "category";
         String thumbnailId = "thumbnail";
+
         Post post = postRepository.save(Post.builder()
                 .title(title)
                 .content(content)
-                .author(author)
+                .userId(userId)
+                .username(username)
                 .category(category)
                 .thumbnailId(thumbnailId)
+                .build());
+
+        // Must save to PostsByUser too
+        PostsByUserPK key = PostsByUserPK.builder()
+                .userId(post.getUserId())
+                .dateCreated(post.getDateCreated())
+                .build();
+        PostsByUser postsByUser = postsByUserRepository.save(PostsByUser.builder()
+                .title(title)
+                .key(key)
+                .thumbnailId(thumbnailId)
+                .username(username)
+                .postId(post.getId())
                 .build());
 
         UUID getId = post.getId();
@@ -185,5 +247,8 @@ public class PostApiControllerTest {
 
         List<Post> posts = postRepository.findAll();
         assertThat(posts.stream().count()).isEqualTo(0);
+
+        List<PostsByUser> postsByUserList = postsByUserRepository.findAll();
+        assertThat(postsByUserList.stream().count()).isEqualTo(0);
     }
 }

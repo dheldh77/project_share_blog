@@ -1,11 +1,10 @@
 package com.example.ShareBlog.service.post;
 
-import com.example.ShareBlog.domain.posts.Post;
-import com.example.ShareBlog.domain.posts.PostRepository;
-import com.example.ShareBlog.domain.postsByUser.PostsByUserRepository;
-import com.example.ShareBlog.web.dto.PostResponseDto;
-import com.example.ShareBlog.web.dto.PostSaveRequestDto;
-import com.example.ShareBlog.web.dto.PostUpdateRequestDto;
+import com.example.ShareBlog.domain.post.Post;
+import com.example.ShareBlog.domain.post.PostRepository;
+import com.example.ShareBlog.web.dto.post.PostResponseDto;
+import com.example.ShareBlog.web.dto.post.PostSaveRequestDto;
+import com.example.ShareBlog.web.dto.post.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +16,6 @@ import java.util.UUID;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final PostsByUserRepository postsByUserRepository;
 
     @Transactional
     public UUID save(PostSaveRequestDto requestDto){
@@ -31,7 +29,6 @@ public class PostService {
 
         post.update(requestDto.getTitle(),
                 requestDto.getContent(),
-                requestDto.getAuthor(),
                 requestDto.getCategory(),
                 requestDto.getThumbnailId());
         postRepository.save(post);
@@ -55,8 +52,4 @@ public class PostService {
         postRepository.delete(post);
     }
 
-//    @Transactional
-//    public void findByUser(PostsByUserPrimaryKey key){
-//        Optional<PostsByUser> postsSlice = postsByUserRepository.findAllById(key);
-//    }
 }

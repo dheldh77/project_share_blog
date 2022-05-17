@@ -1,4 +1,4 @@
-package com.example.ShareBlog.domain.posts;
+package com.example.ShareBlog.domain.post;
 
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.stereotype.Repository;

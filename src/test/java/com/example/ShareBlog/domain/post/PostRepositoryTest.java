@@ -1,8 +1,9 @@
-package com.example.ShareBlog.domain.posts;
+package com.example.ShareBlog.domain.post;
 
 import com.datastax.driver.core.Session;
 import org.junit.After;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -46,8 +47,8 @@ public class PostRepositoryTest {
         }
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @BeforeEach
+    public void reset() throws Exception {
         postRepository.deleteAll();
     }
 
@@ -55,13 +56,15 @@ public class PostRepositoryTest {
     public void saveAndGetPost() {
         String title = "title";
         String content = "content";
-        String author = "author";
+        UUID userId = UUID.randomUUID();
+        String username = "username";
         String category = "category";
 
         postRepository.save(Post.builder()
                 .title(title)
                 .content(content)
-                .author(author)
+                .userId(userId)
+                .username(username)
                 .category(category)
                 .build());
 
@@ -69,32 +72,32 @@ public class PostRepositoryTest {
         Post post = posts.get(0);
         assertThat(post.getTitle()).isEqualTo(title);
         assertThat(post.getContent()).isEqualTo(content);
-        assertThat(post.getAuthor()).isEqualTo(author);
+        assertThat(post.getUsername()).isEqualTo(username);
         assertThat(post.getCategory()).isEqualTo(category);
         System.out.println(post.getDateCreated() + ", " + post.getDateModified());
     }
 
     @Test
     public void TestDateModified() throws InterruptedException {
-        UUID post_id = UUID.randomUUID();
         String title = "title";
         String content = "content";
-        String author = "author";
+        UUID userId = UUID.randomUUID();
+        String username = "username";
         String category = "category";
-        String thumbnailid = "thumbnail";
+        String thumbnailId = "thumbnail";
 
         postRepository.save(Post.builder()
                 .title(title)
                 .content(content)
-                .author(author)
+                .userId(userId)
+                .username(username)
                 .category(category)
-                .thumbnailId(thumbnailid)
+                .thumbnailId(thumbnailId)
                 .build());
 
         String title2 = "title2";
         String content2 = "content2";
-        String author2 = "author2";
-        String thumbnailid2 = "thumbnail2";
+        String thumbnailId2 = "thumbnail2";
         String category2 = "category2";
 
         // Get post
@@ -107,7 +110,7 @@ public class PostRepositoryTest {
         System.out.println(created1 + ", " + modified1);
 
         // Update post
-        post.update(title2, content2, author2, category2, thumbnailid2);
+        post.update(title2, content2, category2, thumbnailId2);
         postRepository.save(post);
 
         // Get updated post by id
@@ -117,9 +120,8 @@ public class PostRepositoryTest {
 
         assertThat(updatedPost.get().getTitle()).isEqualTo(title2);
         assertThat(updatedPost.get().getContent()).isEqualTo(content2);
-        assertThat(updatedPost.get().getAuthor()).isEqualTo(author2);
         assertThat(updatedPost.get().getCategory()).isEqualTo(category2);
-        assertThat(updatedPost.get().getThumbnailId()).isEqualTo(thumbnailid2);
+        assertThat(updatedPost.get().getThumbnailId()).isEqualTo(thumbnailId2);
         assertThat(modified1).isNotEqualTo(post.getDateModified());
     }
 
