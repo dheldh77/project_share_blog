@@ -1,7 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import vuetify from './plugins/vuetify'
+import { loadFonts } from './plugins/webfontloader'
 
-import axios from 'axios'
+loadFonts()
 
-const app = createApp(App).mount('#app');
-app.config.globalProperties.$axios = axios; // Every components can be used as this.$axios without import.
+createApp(App)
+  .use(vuetify)
+  .mount('#app')

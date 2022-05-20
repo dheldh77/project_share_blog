@@ -1,28 +1,65 @@
 <template>
-  <div>
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <v-main>
+      <div class="d-flex align-center flex-column">
+        <div class="text-subtitle-2">With props</div>
+        <v-card
+          width="400"
+          title="This is a title"
+          subtitle="This is a subtitle"
+          text="This is content"
+        ></v-card>
+
+        <div class="mt-4 text-subtitle-2">With slots</div>
+        <v-card
+          width="400"
+        >
+          <template v-slot:title>
+            This is a title
+          </template>
+
+          <template v-slot:subtitle>
+            This is a subtitle
+          </template>
+
+          <template v-slot:text>
+            This is content
+          </template>
+        </v-card>
+
+        <div class="mt-4 text-subtitle-2">With markup</div>
+        <v-card
+          width="400"
+        >
+          <v-card-header>
+            <v-card-header-text>
+              <v-card-title>This is a title</v-card-title>
+              <v-card-subtitle>This is a subtitle</v-card-subtitle>
+            </v-card-header-text>
+          </v-card-header>
+
+          <v-card-text>
+            This is content
+          </v-card-text>
+        </v-card>
+      </div>
+      
+    </v-main>
+    
+  </v-app>
+  
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
+
   components: {
-    HelloWorld
-  }
+  },
+
+  data: () => ({
+    //
+  }),
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
