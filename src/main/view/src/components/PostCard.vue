@@ -3,7 +3,6 @@
         class="mx-auto"
         max-width="400"
     >
-        1111
         <v-img
         class="align-end text-white"
         height="200"
@@ -32,11 +31,14 @@
             Explore
         </v-btn>
         </v-card-actions>
-    </v-card>     
+    </v-card>
 </template>
 
 <script>
 export default {
-    name: 'HomePage',
-};
+  name: 'PostCard',
+
+  components: {
+  },
+}
 </script>
