@@ -40,7 +40,7 @@ export default {
 
     .content-row {
         display: flex;
-        padding: 20px 20px 0px 0px;
+        padding: 30px 30px 0px 0px;
     }
 
 </style>

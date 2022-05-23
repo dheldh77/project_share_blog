@@ -24,11 +24,7 @@
 
         <v-card-actions>
         <v-btn color="orange">
-            Share
-        </v-btn>
-
-        <v-btn color="orange">
-            Explore
+            View
         </v-btn>
         </v-card-actions>
     </v-card>

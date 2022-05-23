@@ -9,7 +9,7 @@
       >
         <v-list-item
           prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-          title="John Leider"
+          title="dheldh77"
         >
           <template v-slot:append>
             <v-btn
@@ -23,9 +23,10 @@
         <v-divider></v-divider>
 
         <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-home-city" title="Home" value="home"></v-list-item>
-          <v-list-item prepend-icon="mdi-account" title="My Account" value="account"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-group-outline" title="Users" value="users"></v-list-item>
+          <v-list-item prepend-icon="mdi-upload" title="New Post" value="newPost"></v-list-item>
+          <v-list-item prepend-icon="mdi-account" title="Category" value="account"></v-list-item>
+          <v-list-item prepend-icon="mdi-account-group-outline" title="My Group" value="users"></v-list-item>
+          <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
         </v-list>
       </v-navigation-drawer>
       <v-main style="height: 0;">
@@ -46,9 +47,10 @@ export default {
     selection: 1,
     drawer: true,
         items: [
-          { title: 'Home', icon: 'mdi-home-city' },
+          { title: 'New Post', icon: 'mdi-upload' },
           { title: 'My Account', icon: 'mdi-account' },
           { title: 'Users', icon: 'mdi-account-group-outline' },
+          { title: 'Starred', icons: 'mdi-star'}
         ],
         rail: true,
   }),
